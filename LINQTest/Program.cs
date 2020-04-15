@@ -12,9 +12,11 @@ namespace LINQTest
         static void Main(string[] args)
         {
             List<Person> people = GenerateListOfPeople();
-            
-            var ages = people.Where(x => x.FirstName.StartsWith("S")&& x.Age.ToString().Contains(5.ToString())).ToList();
-            
+
+            //var ages = people.Where(x => x.FirstName.StartsWith("S")&& x.Age.ToString().Contains(5.ToString())).ToList();
+            var S = from person in people
+                    where (Convert.ToString(person.FirstName[0]) == "S")
+                    select person;
             //Console.WriteLine("Random Persons:\n");
             //PrintPerson();
 
@@ -23,11 +25,16 @@ namespace LINQTest
 
             //Console.WriteLine("\nList of 200 People:\n");
             //GenerateListOfPeople();
-            
-            foreach (var person in ages) 
+
+            people.Add(TestDataGenerator.GenerateRandomPerson(Person.Gender.Female, "Sassy", null));
+            foreach (var person in S) 
             {
                 Console.WriteLine($"{person.FirstName} {person.LastName}, {person.Age}, {person.gender}");
             }
+            
+            
+            //{ FirstName = "Sasha", LastName = "Test", Age = 20, gender = Person.Gender.Female}
+           
             Console.ReadKey();
         }
 
@@ -54,7 +61,8 @@ namespace LINQTest
             
             Console.WriteLine($"\nThis List had {personList.Count} people.");
         }
-
+        
+        
         public static List<Person> GenerateListOfPeople() 
         {
             int PeopleAmount = 200;
