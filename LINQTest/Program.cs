@@ -15,7 +15,8 @@ namespace LINQTest
 
             //var ages = people.Where(x => x.FirstName.StartsWith("S")&& x.Age.ToString().Contains(5.ToString())).ToList();
             var S = from person in people
-                    where (Convert.ToString(person.FirstName[0]) == "S")
+                    where (Convert.ToString(person.FirstName[0]) is "S") 
+                    orderby person.Age descending
                     select person;
             //Console.WriteLine("Random Persons:\n");
             //PrintPerson();
@@ -26,7 +27,7 @@ namespace LINQTest
             //Console.WriteLine("\nList of 200 People:\n");
             //GenerateListOfPeople();
 
-            people.Add(TestDataGenerator.GenerateRandomPerson(Person.Gender.Female, "Sassy", null));
+            people.Add(TestDataGenerator.GenerateRandomPerson((Person.Gender)(-1),"STESTIHENKILÖ", null));
             foreach (var person in S) 
             {
                 Console.WriteLine($"{person.FirstName} {person.LastName}, {person.Age}, {person.gender}");
